@@ -14,6 +14,7 @@ def squish(row):
   row["header"] = header_string
   #row.drop(index=0)
 
+
   return row
 
 #test = products.apply(squish, axis='columns')
