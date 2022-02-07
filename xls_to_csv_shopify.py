@@ -1,23 +1,99 @@
 import pandas as pd
 
-products = pd.read_excel(r'/home/jacobg/Documents/Code/ShopifyScripts/Website document .xlsx')
+products = pd.read_excel(
+    r'/home/jacobg/Documents/Code/ShopifyScripts/Website document .xlsx')
 
 numProducts = products.shape[0]
 numColumns = products.shape[1]
 
-"Header,Vendor,Published,Variant Inventory Quantity,Variant Inventory Policy,Variant Fulfillment Service,Variant Price,Variant Requires Shipping,Variant Taxable,Variant Grams,Variant Weight Unit,Status,Option1 Name,Option1 Value"
+formattedProducts = pd.DataFrame(columns=[
+    'Stock ID',
+    'ID',
+    'Handle',
+    'Command',
+    'Title',
+    'Body HTML',
+    'Vendor',
+    'Tags',
+    'Tags Command',
+    'Status',
+    'Published',
+    'Published Scope',
+    'Gift Card',
+    'Row #',
+    'Top Row',
+    'Image Src',
+    'Image Command',
+    'Image Position',
+    'Image Alt Text',
+    'Variant ID',
+    'Variant Command',
+    'Variant Position',
+    'Variant SKU',
+    'Variant Price',
+    'Variant Requires Shipping',
+    'Variant Taxable',
+    'Variant Image',
+    'Variant Inventory Tracker',
+    'Variant Inventory Policy',
+    'Variant Fulfillment Service',
+    'Variant Inventory Qty',
+    'Metafield: my_fields.brand_name [single_line_text_field]',
+    'Metafield: my_fields.size [single_line_text_field]',
+    'Metafield: my_fields.badges [multi_line_text_field]',
+    'Metafield: my_fields.description2 [multi_line_text_field]',
+    'Metafield: my_fields.dosage [single_line_text_field]',
+    'Metafield: my_fields.ingredients [single_line_text_field]',
+    'Metafield: my_fields.product_id_1 [single_line_text_field]',
+    'Metafield: my_fields.product_id_2 [single_line_text_field]',
+    'Metafield: my_fields.brand_description [single_line_text_field]'
+    'Metafield: my_fields.din [single_line_text_field]',
+    'Metafield: my_fields.allergens [multi_line_text_field]',
+    'Metafield: my_fields.product_description [single_line_text_field]'
+])
+
+formattedProducts.set_index('Stock ID', inplace=True)
 
 
-def squish(row):
-  print(row)
-  header_string = "Handle,Title,Body (HTML),Vendor,Standardized Product Type,Custom Product Type,Tags,Published,Option1 Name,Option1 Value,Option2 Name,Option2 Value,Option3 Name,Option3 Value,Variant SKU,Variant Grams,Variant Inventory Tracker,Variant Inventory Qty,Variant Inventory Policy,Variant Fulfillment Service,Variant Price,Variant Compare At Price,Variant Requires Shipping,Variant Taxable,Variant Barcode,Image Src,Image Position,Image Alt Text,Gift Card,SEO Title,SEO Description,Google Shopping / Google Product Category,Google Shopping / Gender,Google Shopping / Age Group,Google Shopping / MPN,Google Shopping / AdWords Grouping,Google Shopping / AdWords Labels,Google Shopping / Condition,Google Shopping / Custom Product,Google Shopping / Custom Label 0,Google Shopping / Custom Label 1,Google Shopping / Custom Label 2,Google Shopping / Custom Label 3,Google Shopping / Custom Label 4,Variant Image,Variant Weight Unit,Variant Tax Code,Cost per item,Status"
-  row["header"] = header_string
-  #row.drop(index=0)
+def format(row):
+    row["Command"] = "MERGE"
+    row["Title"] = row["Product Name"]
+    row["Body HTML"] = row["Description"]
+    row['Vendor'] = row['Brand']
+
+    tags_str = row["Category Type"].replace(
+        ",", "") + ", " + row["Category SubType"].replace(",", "")
+
+    row["Tags"] = tags_str
+    row["Tags Command"] = "REPLACE"
+    row["Status"] = "Active"
+    row["Published"] = "TRUE"
+    row["Published Scope"] = "global"
+    row["Gift Card"] = "FALSE"
+    row["Row #"] = 1
+    row["Top Row"] = "TRUE"
+    row["Image Src"] = row["Product Image Link"]
+    row["Image Command"] = "MERGE"
+    row["Image Position"] = 1
+    row["Image Alt Text"] = row["Title"]
+    row["Variant Command"] = "MERGE"
+    row["Variant Position"] = 1
+    row["Variant SKU"] = row["Stock ID"]
+    row["Variant Price"] = row["Wholesale Price"]
+    row["Variant Requires Ship"] = "TRUE"
+    row["Variant Taxable"] = "TRUE"
+    row["Variant Image"] = row["Image Src"]
+    row["Variant Inventory"] = "shopify"
+    row["Variant Inventory Policy"] = "deny"
+    row["Variant Fulfillment Service"] = "manual"
+    row["Variant Inventory Qty"]
+
+    return row
 
 
-  return row
+products = products.apply(format, axis=1)
 
-#test = products.apply(squish, axis='columns')
+print(products.iloc[0])
 
 
-print(products.loc[products["Category SubType"] == 'Other'])
+formattedProducts.to_excel("formatted_products.xlsx")
