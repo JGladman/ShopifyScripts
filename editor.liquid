@@ -1,0 +1,103 @@
+<!-- Allergen HTML -->
+{% assign allergens = product.metafields.my_fields.allergens | newline_to_br | split: 'break'%}
+
+{% if allergens.size == 1 %}
+{% assign all = allergens[0] | newline_to_br | split: '<br />'%}
+{% else %}
+<p>TODO</p>
+{%endif%}
+
+<div style=" 
+            display: flex; 
+            flex-direction: column;">
+  <h4>{{all[0]}}</h4>
+  <div style="display: flex;
+              flex-direction: row;
+              flex-wrap: wrap;">
+    {% for allergen in all %}
+    {% if allergen contains all[0] or allergen.size <= 3 %} {% continue %} {% endif %} {% if allergen contains "Egg" %}
+      <div style="display: flex;
+                    flex-direction: column;
+                    align-items: center;
+      flex: 0 0 25%; margin-bottom: 30px;
+      margin-bottom: 30px">
+      <i class="fa-solid fa-2x fa-egg"></i>
+      <p>Egg</p>
+  </div>
+  {% elsif allergen contains "Dairy"%}
+  <div style="display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 0 0 25%; margin-bottom: 30px;">
+    <i class=" fa-solid fa-2x fa-cheese"></i>
+    <p>Dairy</p>
+  </div>
+  {% elsif allergen contains "Mustard"%}
+  <div style="display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 0 0 25%; margin-bottom: 30px;">
+    <i class="fa-solid fa-2x fa-hotdog"></i>
+    <p>Mustard</p>
+  </div>
+  {% elsif allergen contains "Peanuts"%}
+  <div style="display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 0 0 25%; margin-bottom: 30px;">
+    <i class=" fa-solid fa-2x fa-seedling"></i>
+    <p>Peanuts</p>
+  </div>
+  {% elsif allergen contains "Seafood"%}
+  <div style="display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 0 0 25%; margin-bottom: 30px;">
+    <i class=" fa-solid fa-2x fa-shrimp"></i>
+    <p>Seafood</p>
+  </div>
+  {% elsif allergen contains "Sesame"%}
+  <div style="display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 0 0 25%; margin-bottom: 30px;">
+    <i class=" fa-solid fa-2x fa-stroopwafel"></i>
+    <p>Sesame</p>
+  </div>
+  {% elsif allergen contains "Soy"%}
+  <div style="display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 0 0 25%; margin-bottom: 30px;">
+    <i class=" fa-solid fa-2x fa-cookie-bite"></i>
+    <p>Soy</p>
+  </div>
+  {% elsif allergen contains "Sulfites"%}
+  <div style="display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 0 0 25%; margin-bottom: 30px;">
+    <i class=" fa-solid fa-2x fa-brain"></i>
+    <p>Sulfites</p>
+  </div>
+  {% elsif allergen contains "Tree Nuts"%}
+  <div style="display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 0 0 25%; margin-bottom: 30px;">
+    <i class=" fa-solid fa-2x fa-cake-candles"></i>
+    <p>Tree Nuts</p>
+  </div>
+  {% elsif allergen contains "Wheat Gluten"%}
+  <div style="display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 0 0 25%; margin-bottom: 30px;">
+    <i class=" fa-solid fa-2x fa-bread-slice"></i>
+    <p>Wheat Gluten</p>
+  </div>
+  {% else %}
+  <p>Unsupported </p>
+  {% endif %}
+  {% endfor %}
+</div>

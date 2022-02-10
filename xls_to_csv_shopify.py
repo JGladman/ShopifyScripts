@@ -78,17 +78,27 @@ def compile_descriptions(columns, row):
 def compile_allergens(columns, row):
     allergens = ""
 
-    contains = "Contains: "
-    may_contain = "May Contain: "
+    contains = "Contains:\r\n"
+    may_contain = "May Contain:\r\n"
+
+    include_contains = False
+    include_may = False
 
     for column in columns:
         if row[column] == "Y":
-            contains = contains + column.replace("Contains", "") + "\r\n"
+            contains = contains + column.replace("Contains", "") + " (C)\r\n"
+            include_contains = True
         elif row[column] == "M":
             may_contain = may_contain + \
-                column.replace("Contains", "") + "\r\n"
+                column.replace("Contains", "") + " (M)\r\n"
+            include_may = True
 
-    allergens = contains + "\r\n\r\n" + may_contain
+    if include_contains:
+        allergens += contains
+        if include_may:
+            allergens += "break" + may_contain
+    elif include_may:
+        allergens = may_contain
 
     return allergens
 
@@ -204,7 +214,7 @@ formatted_products = products.apply(format, axis=1)
 
 formatted_products.set_index('Stock ID', inplace=True)
 
-print(products.iloc[0])
-
 formatted_products.head(10).to_excel(
     "formatted_products.xlsx", sheet_name="Products", index=False)
+
+print("Completed")
