@@ -3,55 +3,6 @@ import pandas as pd
 products = pd.read_excel(
     r'/home/jacobg/Documents/Code/ShopifyScripts/Website document .xlsx')
 
-numProducts = products.shape[0]
-numColumns = products.shape[1]
-
-formatted_products = pd.DataFrame(columns=[
-    'Stock ID',
-    'ID',
-    'Handle',
-    'Command',
-    'Title',
-    'Body HTML',
-    'Vendor',
-    'Tags',
-    'Tags Command',
-    'Status',
-    'Published',
-    'Published Scope',
-    'Gift Card',
-    'Row #',
-    'Top Row',
-    'Image Src',
-    'Image Command',
-    'Image Position',
-    'Image Alt Text',
-    'Variant ID',
-    'Variant Command',
-    'Variant Position',
-    'Variant SKU',
-    'Variant Price',
-    'Variant Requires Shipping',
-    'Variant Taxable',
-    'Variant Image',
-    'Variant Inventory Tracker',
-    'Variant Inventory Policy',
-    'Variant Fulfillment Service',
-    'Variant Inventory Qty',
-    'Metafield: my_fields.brand_name [single_line_text_field]',
-    'Metafield: my_fields.size [single_line_text_field]',
-    'Metafield: my_fields.badges [multi_line_text_field]',
-    'Metafield: my_fields.description2 [multi_line_text_field]',
-    'Metafield: my_fields.dosage [multi_line_text_field]',
-    'Metafield: my_fields.ingredients [single_line_text_field]',
-    'Metafield: my_fields.product_id_1 [single_line_text_field]',
-    'Metafield: my_fields.product_id_2 [single_line_text_field]',
-    'Metafield: my_fields.brand_description [single_line_text_field]'
-    'Metafield: my_fields.din [single_line_text_field]',
-    'Metafield: my_fields.allergens [multi_line_text_field]',
-    'Metafield: my_fields.product_description [single_line_text_field]'
-])
-
 
 def compile_badges(columns, row):
     badges = ""
@@ -108,12 +59,8 @@ def format(row):
     row["Title"] = row["Product Name"]
     row["Body HTML"] = row["Description"]
     row['Vendor'] = row['Brand']
-
-    # tags_str = row["Category Type"].replace(
-    #     ",", "") + ", " + row["Category SubType"].replace(",", "")
-
     row["Tags"] = row["Category Type"].replace(
-        ",", "") + ", " + row["Category SubType"].replace(",", "")
+        ",", "") + ", " + row["Category SubType"].replace(",", "") + ',' + row['Brand']
     row["Tags Command"] = "REPLACE"
     row["Status"] = "Active"
     row["Published"] = "TRUE"
@@ -151,7 +98,7 @@ def format(row):
     row["Metafield: my_fields.description2 [multi_line_text_field]"] = compile_descriptions(
         ["Key Product Features 1", "Key Product Features 2", "Key Product Features 3", "Key Product Features 4", "Key Product Features 5"], row)
     row["Metafield: my_fields.dosage [multi_line_text_field]"] = row["Recommended Dosage"]
-    row["Metafield: my_fields.ingredients [single_line_text_field]"] = row["Ingredients"]
+    row["Metafield: my_fields.ingredients [multi_line_text_field]"] = row["Ingredients"]
     row["Metafield: my_fields.product_id_1 [single_line_text_field]"] = row["Unit UPC"]
     row["Metafield: my_fields.product_id_2 [single_line_text_field]"] = row["Stock ID"]
     row["Metafield: my_fields.brand_description [multi_line_text_field]"] = row["Brand Description"]
@@ -159,7 +106,7 @@ def format(row):
     row["Metafield: my_fields.allergens [multi_line_text_field]"] = compile_allergens([
         "Contains Egg", "Contains Dairy", "Contains Mustard", "Contains Peanuts", "Contains Seafood", "Contains Sesame", "Contains Soy", "Contains Sulfites", "Contains Tree Nuts", "Contains Wheat Gluten"
     ], row)
-    row["Metafield: my_fields.product_description [single_line_text_field]"] = row["Description"]
+    row["Metafield: my_fields.product_description [multi_line_text_field]"] = row["Description"]
     row["Metafield: my_fields.country_of_origin [single_line_text_field]"] = row["Country of Origin"]
 
     row = row.filter(['Stock ID',
@@ -198,13 +145,13 @@ def format(row):
                       'Metafield: my_fields.badges [multi_line_text_field]',
                       'Metafield: my_fields.description2 [multi_line_text_field]',
                       'Metafield: my_fields.dosage [multi_line_text_field]',
-                      'Metafield: my_fields.ingredients [single_line_text_field]',
+                      'Metafield: my_fields.ingredients [multi_line_text_field]',
                       'Metafield: my_fields.product_id_1 [single_line_text_field]',
                       'Metafield: my_fields.product_id_2 [single_line_text_field]',
                       "Metafield: my_fields.brand_description [multi_line_text_field]",
                       'Metafield: my_fields.din [single_line_text_field]',
                       'Metafield: my_fields.allergens [multi_line_text_field]',
-                      'Metafield: my_fields.product_description [single_line_text_field]',
+                      'Metafield: my_fields.product_description [multi_line_text_field]',
                       "Metafield: my_fields.country_of_origin [single_line_text_field]"])
 
     return row
@@ -212,9 +159,11 @@ def format(row):
 
 formatted_products = products.apply(format, axis=1)
 
+print(products["Brand"].unique())
+
 formatted_products.set_index('Stock ID', inplace=True)
 
-formatted_products.head(10).to_excel(
+formatted_products.to_excel(
     "formatted_products.xlsx", sheet_name="Products", index=False)
 
-print("Completed")
+print("Complete")
