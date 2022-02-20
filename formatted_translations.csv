@@ -51420,8 +51420,8 @@ ONLINE_STORE_THEME,'121616662576,section.template--14399157076016__main.tab.titl
 ONLINE_STORE_THEME,'121616662576,section.template--14399157076016__main.tab.content,fr,,"<p>Use collapsible tabs for more detailed information that will help customers make a purchasing decision.</p><p>Ex: Shipping and return policies, size guides, and other common questions.</p>",
 ONLINE_STORE_THEME,'121616662576,section.template--14399157076016__main.text.text,fr,,Text block,
 ONLINE_STORE_THEME,'121616662576,section.template--14399157076016__main.contact.title,fr,,Ask a question,
-ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__main.5834dc68-fe51-46cb-a2f2-bfde583734e2.text,fr,,Brand Name: {{ product.metafields.my_fields.brand_name.value }},
-ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__main.cc0b2cb9-8be3-49a0-a40e-025e500808e4.text,fr,,Size: {{ product.metafields.my_fields.size.value }},
+ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__main.5834dc68-fe51-46cb-a2f2-bfde583734e2.text,fr,,Brand Name: {{ product.metafields.my_fields.brand_name.value }},Marque: {{ product.metafields.my_fields.brand_name.value }}
+ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__main.cc0b2cb9-8be3-49a0-a40e-025e500808e4.text,fr,,Size: {{ product.metafields.my_fields.size.value }},Taille: {{ product.metafields.my_fields.size.value }}
 ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__main.ab115826-c856-42d5-af13-3750eef221f1.text,fr,,"Rating/Review (This item will be tricky, rating will either need to be manually input or web scraper and script will need to be constructed to update automatically. Review button is easy to add if vendor has page for it on their website)",
 ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__main.sales_point.text,fr,,Free worldwide shipping,
 ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__main.sales_point2.text,fr,,Free returns,
@@ -51429,7 +51429,7 @@ ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__main.sales_po
 ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__main.sales_point4.text,fr,,Secure payments,
 ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__sub.3d185307-ff9a-448c-917b-3412a0c82996.title,fr,,Brand Description,Description de la Marque
 ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__sub.3d185307-ff9a-448c-917b-3412a0c82996.content,fr,,<p>{{ product.metafields.my_fields.brand_description | metafield_tag }}</p>,
-ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__sub.18583d88-c51d-4f6a-b30d-fe439dd28800.title,fr,,Product Description,
+ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__sub.18583d88-c51d-4f6a-b30d-fe439dd28800.title,fr,,Product Description,Description du Produit
 ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__sub.18583d88-c51d-4f6a-b30d-fe439dd28800.content,fr,,<p>{{ product.metafields.my_fields.product_description.value }}</p><p>{{ product.metafields.my_fields.description2 | metafield_tag }}</p>,
 ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__sub.tab.title,fr,,D1,
 ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__sub.tab.content,fr,,<p>IJKLM</p>,
@@ -51437,12 +51437,12 @@ ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__sub.f825428e-
 ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__sub.f825428e-3cae-48ee-8750-8f52d7f8065d.content,fr,,<p>AC</p>,
 ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__sub.b272b1d7-22af-433c-85e8-85a7a0ea38d2.title,fr,,Dosage,
 ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__sub.b272b1d7-22af-433c-85e8-85a7a0ea38d2.content,fr,,<p>{{ product.metafields.my_fields.dosage | metafield_tag }}</p>,
-ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__sub.935fbc79-e98e-4fa5-8af4-d78b645e462d.title,fr,,Ingredients,
+ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__sub.935fbc79-e98e-4fa5-8af4-d78b645e462d.title,fr,,Ingredients,Ingrédients
 ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__sub.935fbc79-e98e-4fa5-8af4-d78b645e462d.content,fr,,<p>{{ product.metafields.my_fields.ingredients.value }}</p>,
 ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__sub.55fe0d13-b50b-4cc4-84c9-bc2840b4f1fc.title,fr,,Allergens,
 ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__sub.55fe0d13-b50b-4cc4-84c9-bc2840b4f1fc.content,fr,,<p>{{ product.metafields.my_fields.allergens | metafield_tag }}</p>,
-ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__sub.11989910-ead7-460f-8e2a-88f02d20837f.title,fr,,Product Information,
-ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__sub.11989910-ead7-460f-8e2a-88f02d20837f.content,fr,,<p>Country of Origin: {{ product.metafields.my_fields.country_of_origin.value }}</p><p></p><p>Product ID Number 1: {{ product.metafields.my_fields.product_id_1.value }}</p><p></p><p>Product ID Number 2: {{ product.metafields.my_fields.product_id_2.value }}</p><p></p><p>(Can dynamically render DIN/NPN if present on product. Missing for most)</p>,
+ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__sub.11989910-ead7-460f-8e2a-88f02d20837f.title,fr,,Product Information,Information Produit
+ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__sub.11989910-ead7-460f-8e2a-88f02d20837f.content,fr,,<p>Country of Origin: {{ product.metafields.my_fields.country_of_origin.value }}</p><p></p><p>Product ID Number 1: {{ product.metafields.my_fields.product_id_1.value }}</p><p></p><p>Product ID Number 2: {{ product.metafields.my_fields.product_id_2.value }}</p><p></p><p>(Can dynamically render DIN/NPN if present on product. Missing for most)</p>,<p>Pays d'origine: {{ product.metafields.my_fields.country_of_origin.value }}</p><p></p><p>Numéro d'identification du produit 1: {{ product.metafields.my_fields.product_id_1.value }}</p><p></p><p>Numéro d'identification du produit 2: {{ product.metafields.my_fields.product_id_2.value }}</p><p></p><p>(Can dynamically render DIN/NPN if present on product. Missing for most)</p>
 ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__sub.0a50092e-70a9-46b5-bc0f-c650e157c421.text,fr,,Country of Origin: {{ product.metafields.my_fields.country_of_origin.value }},
 ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__sub.3e8b0a91-6d17-408d-9449-647580a06b5d.text,fr,,Product ID Number 1: {{ product.metafields.my_fields.product_id_1.value }},
 ONLINE_STORE_THEME,'121616662576,section.template--14399157108784__sub.9e8b03d3-de4c-403b-814e-97d79dcb1dc1.text,fr,,Product ID Number 2: {{ product.metafields.my_fields.product_id_2.value }},
