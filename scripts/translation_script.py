@@ -19,6 +19,8 @@ def feature_mapping(desc):
         return desc
 
 
+translated_values["Description"] = translated_values["Description"].map(feature_mapping)
+
 translated_values["Key Product Features"] = translated_values[
     "Key Product Features"
 ].map(feature_mapping)
@@ -76,15 +78,23 @@ def translate(row):
         ] = "<p>Pays d'origine: {{ product.metafields.my_fields.country_of_origin.value }}</p><p></p><p>Numéro d'identification du produit 1: {{ product.metafields.my_fields.product_id_1.value }}</p><p></p><p>Numéro d'identification du produit 2: {{ product.metafields.my_fields.product_id_2.value }}</p><p></p><p>(Can dynamically render DIN/NPN if present on product. Missing for most)</p>"
     # Translate Metafields
     elif row["Type"] == "METAFIELD" and type(row["Default content"]) == str:
-        # Description
-        features = translated_values.loc[
+        # Description 1
+        desc1 = translated_values.loc[
+            translated_values["Description"]
+            == row["Default content"].replace("\r", "").replace("\n", "")
+        ]
+
+        # Description 2
+        desc2 = translated_values.loc[
             translated_values["Key Product Features"]
             == row["Default content"].replace("\r", "").replace("\n", "")
         ]
 
-        if len(features) > 0:
+        if len(desc1) > 0:
+            row["Translated content"] = str(desc1.iloc[0]["Description (FR)"])
+        elif len(desc2) > 0:
             row["Translated content"] = str(
-                features.iloc[0]["Key Product Features (FR)"]
+                desc2.iloc[0]["Key Product Features (FR)"]
             ).replace("_x000D_", "")
 
     return row
