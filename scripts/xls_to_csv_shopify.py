@@ -1,7 +1,7 @@
 import pandas as pd
 
 products = pd.read_excel(
-    r"/home/jacobg/Documents/Code/ShopifyScripts/spreadsheets/Website document .xlsx"
+    r"/home/jacobg/Documents/Code/ShopifyScripts/spreadsheets/WebsiteDocument2.xlsx"
 )
 
 
@@ -162,7 +162,7 @@ def format(row):
         row,
     )
     row["Metafield: my_fields.dosage [multi_line_text_field]"] = row[
-        "Recommended Dosage"
+        "Recommended Use/ Indications "
     ]
     row["Metafield: my_fields.ingredients [multi_line_text_field]"] = row["Ingredients"]
     row["Metafield: my_fields.product_id_1 [single_line_text_field]"] = row["Unit UPC"]
@@ -256,6 +256,7 @@ formatted_products.to_excel(
 )
 
 for col in products:
-    print(col)
+    if "(FR)" in col:
+        print(col)
 
 print("Complete")

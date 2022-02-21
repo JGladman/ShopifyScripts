@@ -1,8 +1,7 @@
 import pandas as pd
-from sqlalchemy import true
 
 items = pd.read_csv(
-    r"/home/jacobg/Documents/Code/ShopifyScripts/spreadsheets/The_Natural_Store_translations_Feb-17-2022.csv"
+    r"/home/jacobg/Documents/Code/ShopifyScripts/spreadsheets/The_Natural_Store_translations_Feb-21-2022.csv"
 )
 
 items.to_excel("unformatted.xlsx")
@@ -25,16 +24,13 @@ translated_values["Key Product Features"] = translated_values[
     "Key Product Features"
 ].map(feature_mapping)
 
-count = 0
+translated_values["Ingredients"] = translated_values["Ingredients"].map(feature_mapping)
 
+translated_values["Recommended Use/ Indications "] = translated_values[
+    "Recommended Use/ Indications "
+].map(feature_mapping)
 
-def set_count():
-    global count
-    count += 1
-
-
-def print_count():
-    print(count)
+print(translated_values["Recommended Use/ Indications (FR)"])
 
 
 def translate(row):
@@ -42,13 +38,32 @@ def translate(row):
     # if row["Type"] == "COLLECTION":
     #     print("COLLECTION")
 
+    # Product title translations
     if row["Type"] == "PRODUCT" and row["Field"] == "title":
         value = translated_values.loc[
             translated_values["Product Name"] == row["Default content"]
         ]
         if value["Product Name (FR)"].iloc[0]:
             row["Translated content"] = value["Product Name (FR)"].iloc[0]
-    if row["Default content"] == "Brand Description":
+
+    # Navbar translations
+    elif row["Default content"] == "Home":
+        row["Translated content"] = "Maison"
+    elif row["Default content"] == "Categories":
+        row["Translated content"] = "Catégories"
+    elif row["Default content"] == "Brands":
+        row["Translated content"] = "Marques"
+    elif row["Default content"] == "Our brands":
+        row["Translated content"] = "Nos marques"
+    elif row["Default content"] == "Our Brands":
+        row["Translated content"] = "Nos Marques"
+    elif row["Default content"] == "Our categories":
+        row["Translated content"] = "Nos catégories"
+    elif row["Default content"] == "Our Categories":
+        row["Translated content"] = "Nos Catégories"
+
+    # Product page translations
+    elif row["Default content"] == "Brand Description":
         row["Translated content"] = "Description de la Marque"
     elif (
         row["Default content"]
@@ -82,41 +97,39 @@ def translate(row):
         desc1 = translated_values.loc[
             translated_values["Description"]
             == row["Default content"].replace("\r", "").replace("\n", "")
-        ]
+        ]["Description (FR)"]
 
         # Description 2
         desc2 = translated_values.loc[
             translated_values["Key Product Features"]
             == row["Default content"].replace("\r", "").replace("\n", "")
-        ]
+        ]["Key Product Features (FR)"]
+
+        # Ingredients
+        ingredients = translated_values.loc[
+            translated_values["Ingredients"]
+            == row["Default content"].replace("\r", "").replace("\n", "")
+        ]["Ingredients (FR)"]
+
+        # Dosage
+        dosage = translated_values.loc[
+            translated_values["Recommended Use/ Indications "]
+            == row["Default content"].replace("\r", "").replace("\n", "")
+        ]["Recommended Use/ Indications (FR)"]
 
         if len(desc1) > 0:
-            row["Translated content"] = str(desc1.iloc[0]["Description (FR)"])
+            row["Translated content"] = str(desc1.iloc[0]).replace("_x000D_", "")
         elif len(desc2) > 0:
-            row["Translated content"] = str(
-                desc2.iloc[0]["Key Product Features (FR)"]
-            ).replace("_x000D_", "")
+            row["Translated content"] = str(desc2.iloc[0]).replace("_x000D_", "")
+        elif len(ingredients) > 0:
+            row["Translated content"] = str(ingredients.iloc[0]).replace("_x000D_", "")
+        elif len(dosage) > 0:
+            row["Translated content"] = str(dosage.iloc[0]).replace("_x000D_", "")
 
     return row
 
 
-# for column in translated_values:
-#     if "FR" in column:
-#         print(column)
-
 items = items.apply(translate, axis=1)
-
-print(
-    items.loc[items["Identification"] == "'20169758310448"]["Translated content"]
-    .values[0]
-    .replace("_x000D_", "")
-)
-
-print(
-    items.loc[items["Identification"] == "'20169758310448"]["Translated content"]
-    .values[0]
-    .replace("_x000D_", "")
-)
 
 items.to_excel("formatted_translations.xlsx", index=False)
 items.to_csv("formatted_translations.csv", index=False)
