@@ -135,3 +135,10 @@ items.to_excel("formatted_translations.xlsx", index=False)
 items.to_csv("formatted_translations.csv", index=False)
 
 print("Complete")
+
+# https://thenounproject.com/icon/peanut-4614698/ peanut
+# https://thenounproject.com/icon/seeds-2516786/ sesame
+# https://thenounproject.com/icon/soy-604524/ soy
+# https://thenounproject.com/icon/red-wine-2901625/ sulfites
+# https://thenounproject.com/icon/walnut-3413234/ tree nuts
+
