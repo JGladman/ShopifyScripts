@@ -170,7 +170,13 @@ def format(row):
     row["Metafield: my_fields.brand_description [multi_line_text_field]"] = row[
         "Brand Description"
     ]
-    row["Metafield: my_fields.din [single_line_text_field]"] = row["DIN/NPN"]
+    if row.notna().loc["DIN/NPN"]:
+        print(row["DIN/NPN"])
+        row["Metafield: my_fields.din [single_line_text_field]"] = "DIN/NPN: " + str(
+            int(row["DIN/NPN"])
+        )
+    else:
+        row["Metafield: my_fields.din [single_line_text_field]"] = ""
     row["Metafield: my_fields.allergens [multi_line_text_field]"] = compile_allergens(
         [
             "Contains Egg",
@@ -247,16 +253,15 @@ def format(row):
 
 formatted_products = products.apply(format, axis=1)
 
-print(products["Brand"].unique())
+print(products.iloc[1].loc["DIN/NPN"])
+print(type(products.iloc[1].loc["DIN/NPN"]))
+
+print(products.iloc[1].isna().loc["DIN/NPN"])
 
 formatted_products.set_index("Stock ID", inplace=True)
 
 formatted_products.to_excel(
     "formatted_products.xlsx", sheet_name="Products", index=False
 )
-
-for col in products:
-    if "(FR)" in col:
-        print(col)
 
 print("Complete")

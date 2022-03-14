@@ -20,7 +20,7 @@
                     align-items: center;
                     flex: 0 0 25%; 
                     margin-bottom: 30px;">
-          <i class="fa-solid fa-2x fa-egg"></i>
+          <i class="fa-solid fa-2x fa-egg" style="color: #e0c88d"></i>
             <p>Egg</p>
         </div>
       {% elsif allergen contains "Dairy"%}
@@ -28,7 +28,7 @@
           flex-direction: column;
           align-items: center;
           flex: 0 0 25%; margin-bottom: 30px;">
-            <i class=" fa-solid fa-2x fa-cheese"></i>
+            <i class=" fa-solid fa-2x fa-cheese" style="color: #ffd867"></i>
             <p>Dairy</p>
         </div>
       {% elsif allergen contains "Mustard"%}
@@ -36,23 +36,27 @@
           flex-direction: column;
           align-items: center;
           flex: 0 0 25%; margin-bottom: 30px;">
-            <i class="fa-solid fa-2x fa-hotdog"></i>
-            <p style="color: red;">Mustard</p>
+            <img src="{{ 'mustard.svg' | asset_url }}"
+                 alt="mustard"
+                 style="width: 20%; height: auto" />
+            <p>Mustard</p>
         </div>
       {% elsif allergen contains "Peanuts"%}
         <div style="display: flex;
           flex-direction: column;
           align-items: center;
           flex: 0 0 25%; margin-bottom: 30px;">
-            <i class=" fa-solid fa-2x fa-seedling"></i>
-            <p style="color: red;">Peanuts</p>
+            <img src="{{ 'peanut.svg' | asset_url }}"
+                 alt="peanut"
+                 style="width: 20%; height: auto" />
+            <p>Peanuts</p>
         </div>
       {% elsif allergen contains "Seafood"%}
         <div style="display: flex;
           flex-direction: column;
           align-items: center;
           flex: 0 0 25%; margin-bottom: 30px;">
-            <i class=" fa-solid fa-2x fa-shrimp"></i>
+            <i class=" fa-solid fa-2x fa-shrimp" style="color:#ff9f9f"></i>
             <p>Seafood</p>
         </div>
       {% elsif allergen contains "Sesame"%}
@@ -60,39 +64,47 @@
           flex-direction: column;
           align-items: center;
           flex: 0 0 25%; margin-bottom: 30px;">
-          <i class=" fa-solid fa-2x fa-stroopwafel"></i>
-          <p style="color: red;">Sesame</p>
+          <img src="{{ 'sesame.svg' | asset_url }}"
+                 alt="sesame"
+                 style="width: 20%; height: auto" />
+          <p>Sesame</p>
         </div>
       {% elsif allergen contains "Soy"%}
         <div style="display: flex;
           flex-direction: column;
           align-items: center;
           flex: 0 0 25%; margin-bottom: 30px;">
-            <i class=" fa-solid fa-2x fa-cookie-bite"></i>
-            <p style="color: red;">Soy</p>
+            <img src="{{ 'soy.svg' | asset_url }}"
+                 alt="soy"
+                 style="width: 20%; height: auto" />
+            <p>Soy</p>
         </div>
       {% elsif allergen contains "Sulfites"%}
         <div style="display: flex;
           flex-direction: column;
           align-items: center;
           flex: 0 0 25%; margin-bottom: 30px;">
-            <i class=" fa-solid fa-2x fa-brain"></i>
-            <p style="color: red;">Sulfites</p>
+            <i class=" fa-solid fa-2x fa-wine-glass" style="color:#b11226"></i>
+            <p>Sulfites</p>
         </div>
       {% elsif allergen contains "Tree Nuts"%}
         <div style="display: flex;
           flex-direction: column;
           align-items: center;
           flex: 0 0 25%; margin-bottom: 30px;">
-            <i class=" fa-solid fa-2x fa-cake-candles"></i>
-            <p style="color: red;">Tree Nuts</p>
+            <img src="{{ 'nuts.svg' | asset_url }}"
+                 alt="nuts"
+                 style="width: 20%; height: auto" />
+            <p>Tree Nuts</p>
         </div>
       {% elsif allergen contains "Wheat Gluten"%}
         <div style="display: flex;
           flex-direction: column;
           align-items: center;
           flex: 0 0 25%; margin-bottom: 30px;">
-          <i class=" fa-solid fa-2x fa-bread-slice"></i>
+          <img src="{{ 'wheat.svg' | asset_url }}"
+                 alt="wheat"
+                 style="width: 20%; height: auto" />
           <p>Wheat Gluten</p>
         </div>
       {% else %}
