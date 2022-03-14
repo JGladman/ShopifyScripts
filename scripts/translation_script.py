@@ -1,10 +1,8 @@
 import pandas as pd
 
 items = pd.read_csv(
-    r"/home/jacobg/Documents/Code/ShopifyScripts/spreadsheets/The_Natural_Store_translations_Feb-21-2022.csv"
+    r"/home/jacobg/Documents/Code/ShopifyScripts/spreadsheets/translations/The_Natural_Store_translations_Feb-21-2022.csv"
 )
-
-items.to_excel("unformatted.xlsx")
 
 translated_values = pd.read_excel(
     r"/home/jacobg/Documents/Code/ShopifyScripts/spreadsheets/WebsiteDocument2.xlsx",
@@ -131,8 +129,8 @@ def translate(row):
 
 items = items.apply(translate, axis=1)
 
-items.to_excel("formatted_translations.xlsx", index=False)
-items.to_csv("formatted_translations.csv", index=False)
+items.to_excel(r"/home/jacobg/Documents/Code/ShopifyScripts/spreadsheets/translations/formatted_translations.xlsx", index=False)
+items.to_csv(r"/home/jacobg/Documents/Code/ShopifyScripts/spreadsheets/translations/formatted_translations.csv", index=False)
 
 print("Complete")
 

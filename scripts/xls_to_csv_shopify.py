@@ -5,6 +5,19 @@ products = pd.read_excel(
 )
 
 
+def convert_wholesale(val):
+    start = val
+    div = start / 0.6
+    dollars = int(div)
+    if dollars == 0:
+        return val
+    cents = div % float(dollars)
+    if cents > 0.49:
+        return dollars + 0.99
+    else:
+        return dollars + 0.49
+
+
 def squish_descriptions(row):
     description = ""
 
@@ -36,7 +49,8 @@ def squish_descriptions(row):
 
 
 products.apply(squish_descriptions, axis=1).to_excel(
-    "WebsiteDocument2.xlsx", index=False
+    r"/home/jacobg/Documents/Code/ShopifyScripts/spreadsheets/WebsiteDocument2.xlsx",
+    index=False,
 )
 
 
@@ -115,7 +129,7 @@ def format(row):
     row["Variant Command"] = "MERGE"
     row["Variant Position"] = 1
     row["Variant SKU"] = row["Stock ID"]
-    row["Variant Price"] = row["Wholesale Price"]
+    row["Variant Price"] = convert_wholesale(row["Wholesale Price"])
     row["Variant Requires Ship"] = "TRUE"
     row["Variant Taxable"] = "TRUE"
     row["Variant Image"] = row["Image Src"]
@@ -171,7 +185,6 @@ def format(row):
         "Brand Description"
     ]
     if row.notna().loc["DIN/NPN"]:
-        print(row["DIN/NPN"])
         row["Metafield: my_fields.din [single_line_text_field]"] = "DIN/NPN: " + str(
             int(row["DIN/NPN"])
         )
@@ -253,15 +266,18 @@ def format(row):
 
 formatted_products = products.apply(format, axis=1)
 
-print(products.iloc[1].loc["DIN/NPN"])
-print(type(products.iloc[1].loc["DIN/NPN"]))
-
-print(products.iloc[1].isna().loc["DIN/NPN"])
-
 formatted_products.set_index("Stock ID", inplace=True)
 
 formatted_products.to_excel(
-    "formatted_products.xlsx", sheet_name="Products", index=False
+    r"/home/jacobg/Documents/Code/ShopifyScripts/spreadsheets/imports/formatted_products.xlsx",
+    sheet_name="Products",
+    index=False,
 )
 
+print(
+    formatted_products.loc[formatted_products["Title"] == "Conditioner Unscented"][
+        "Variant Price"
+    ]
+)
+print(products.loc[products["Wholesale Price"] == 0]["Product Name"])
 print("Complete")
