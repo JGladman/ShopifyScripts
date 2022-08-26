@@ -1,9 +1,16 @@
 import pandas as pd
 
 products = pd.read_excel(
-    r"/home/jacobg/Documents/Code/ShopifyScripts/spreadsheets/WebsiteDocument2.xlsx"
+    r"/home/jacob/Documents/ShopifyMisc/ShopifyScripts/spreadsheets/WebsiteDocument.xlsx"
 )
 
+print(products["Brand"].unique())
+categories = products["Category Type"].unique()
+for category in categories:
+    categoryItems = products[products["Category Type"] == category]
+    subtypes = categoryItems["Category SubType"].unique()
+    print(category)
+    print(subtypes)
 
 def convert_wholesale(val):
     start = val
@@ -49,7 +56,7 @@ def squish_descriptions(row):
 
 
 products.apply(squish_descriptions, axis=1).to_excel(
-    r"/home/jacobg/Documents/Code/ShopifyScripts/spreadsheets/WebsiteDocument2.xlsx",
+    r"/home/jacob/Documents/ShopifyMisc/ShopifyScripts/spreadsheets/WebsiteDocument2.xlsx",
     index=False,
 )
 
@@ -70,7 +77,7 @@ def compile_descriptions(columns, row):
     for column in columns:
         if type(row[column]) is str:
             if len(row[column]) > 0:
-                descriptions = descriptions + str(row[column]) + "\r\n"
+                descriptions = descriptions + str( row[column]) + "\r\n"
                 # descriptions = descriptions + row[column] + ","
 
     return descriptions
@@ -109,11 +116,11 @@ def format(row):
     row["Body HTML"] = row["Description"]
     row["Vendor"] = row["Brand"]
     row["Tags"] = (
-        row["Category Type"].replace(",", "")
+        str(row["Category Type"]).replace(",", "")
         + ", "
-        + row["Category SubType"].replace(",", "")
+        + str(row["Category SubType"]).replace(",", "")
         + ","
-        + row["Brand"]
+        + str(row["Brand"])
     )
     row["Tags Command"] = "REPLACE"
     row["Status"] = "Active"
@@ -185,9 +192,11 @@ def format(row):
         "Brand Description"
     ]
     if row.notna().loc["DIN/NPN"]:
-        row["Metafield: my_fields.din [single_line_text_field]"] = "DIN/NPN: " + str(
-            int(row["DIN/NPN"])
-        )
+        try: 
+            row["Metafield: my_fields.din [single_line_text_field]"] = "DIN/NPN: " + str(
+                int(row["DIN/NPN"])
+            )
+        except: row["Metafield: my_fields.din [single_line_text_field]"] = ""
     else:
         row["Metafield: my_fields.din [single_line_text_field]"] = ""
     row["Metafield: my_fields.allergens [multi_line_text_field]"] = compile_allergens(
@@ -269,15 +278,9 @@ formatted_products = products.apply(format, axis=1)
 formatted_products.set_index("Stock ID", inplace=True)
 
 formatted_products.to_excel(
-    r"/home/jacobg/Documents/Code/ShopifyScripts/spreadsheets/imports/formatted_products.xlsx",
+    r"/home/jacob/Documents/ShopifyMisc/ShopifyScripts/spreadsheets/imports/formatted_products.xlsx",
     sheet_name="Products",
     index=False,
 )
 
-print(
-    formatted_products.loc[formatted_products["Title"] == "Conditioner Unscented"][
-        "Variant Price"
-    ]
-)
-print(products.loc[products["Wholesale Price"] == 0]["Product Name"])
-print("Complete")
+
